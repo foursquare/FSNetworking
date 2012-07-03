@@ -1,0 +1,253 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		EC1FD48615B44F8A00A26A2F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC1FD48515B44F8A00A26A2F /* Foundation.framework */; };
+		ECF0922915B4D045001458C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = ECF0922815B4D045001458C7 /* main.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		ECF0923115B4D084001458C7 /* FSN_categories.m in Sources */ = {isa = PBXBuildFile; fileRef = ECF0922C15B4D04D001458C7 /* FSN_categories.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		ECF0923215B4D086001458C7 /* FSNConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = ECF0922E15B4D04D001458C7 /* FSNConnection.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		ECF0923315B4D089001458C7 /* FSNData.m in Sources */ = {isa = PBXBuildFile; fileRef = ECF0923015B4D04D001458C7 /* FSNData.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		EC1FD47F15B44F8A00A26A2F /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		EC1FD48115B44F8A00A26A2F /* FSNDemo-mac */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "FSNDemo-mac"; sourceTree = BUILT_PRODUCTS_DIR; };
+		EC1FD48515B44F8A00A26A2F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		ECF0922715B4D045001458C7 /* FSNDemo-mac-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "FSNDemo-mac-Prefix.pch"; sourceTree = "<group>"; };
+		ECF0922815B4D045001458C7 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		ECF0922B15B4D04D001458C7 /* FSN_categories.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FSN_categories.h; sourceTree = "<group>"; };
+		ECF0922C15B4D04D001458C7 /* FSN_categories.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FSN_categories.m; sourceTree = "<group>"; };
+		ECF0922D15B4D04D001458C7 /* FSNConnection.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FSNConnection.h; sourceTree = "<group>"; };
+		ECF0922E15B4D04D001458C7 /* FSNConnection.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FSNConnection.m; sourceTree = "<group>"; };
+		ECF0922F15B4D04D001458C7 /* FSNData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FSNData.h; sourceTree = "<group>"; };
+		ECF0923015B4D04D001458C7 /* FSNData.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FSNData.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		EC1FD47E15B44F8A00A26A2F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EC1FD48615B44F8A00A26A2F /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		EC1FD47615B44F8A00A26A2F = {
+			isa = PBXGroup;
+			children = (
+				ECF0922615B4D045001458C7 /* src */,
+				ECF0922A15B4D04D001458C7 /* fsn */,
+				EC1FD48415B44F8A00A26A2F /* Frameworks */,
+				EC1FD48215B44F8A00A26A2F /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		EC1FD48215B44F8A00A26A2F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				EC1FD48115B44F8A00A26A2F /* FSNDemo-mac */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		EC1FD48415B44F8A00A26A2F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				EC1FD48515B44F8A00A26A2F /* Foundation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		ECF0922615B4D045001458C7 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				ECF0922715B4D045001458C7 /* FSNDemo-mac-Prefix.pch */,
+				ECF0922815B4D045001458C7 /* main.m */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
+		ECF0922A15B4D04D001458C7 /* fsn */ = {
+			isa = PBXGroup;
+			children = (
+				ECF0922B15B4D04D001458C7 /* FSN_categories.h */,
+				ECF0922C15B4D04D001458C7 /* FSN_categories.m */,
+				ECF0922D15B4D04D001458C7 /* FSNConnection.h */,
+				ECF0922E15B4D04D001458C7 /* FSNConnection.m */,
+				ECF0922F15B4D04D001458C7 /* FSNData.h */,
+				ECF0923015B4D04D001458C7 /* FSNData.m */,
+			);
+			name = fsn;
+			path = ../src;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		EC1FD48015B44F8A00A26A2F /* FSNDemo-mac */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EC1FD49015B44F8A00A26A2F /* Build configuration list for PBXNativeTarget "FSNDemo-mac" */;
+			buildPhases = (
+				EC1FD47D15B44F8A00A26A2F /* Sources */,
+				EC1FD47E15B44F8A00A26A2F /* Frameworks */,
+				EC1FD47F15B44F8A00A26A2F /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "FSNDemo-mac";
+			productName = "FSNDemo-mac";
+			productReference = EC1FD48115B44F8A00A26A2F /* FSNDemo-mac */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		EC1FD47815B44F8A00A26A2F /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0430;
+				ORGANIZATIONNAME = "Foursquare Labs, Inc";
+			};
+			buildConfigurationList = EC1FD47B15B44F8A00A26A2F /* Build configuration list for PBXProject "FSNDemo-mac" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = EC1FD47615B44F8A00A26A2F;
+			productRefGroup = EC1FD48215B44F8A00A26A2F /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				EC1FD48015B44F8A00A26A2F /* FSNDemo-mac */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		EC1FD47D15B44F8A00A26A2F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ECF0923315B4D089001458C7 /* FSNData.m in Sources */,
+				ECF0922915B4D045001458C7 /* main.m in Sources */,
+				ECF0923115B4D084001458C7 /* FSN_categories.m in Sources */,
+				ECF0923215B4D086001458C7 /* FSNConnection.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		EC1FD48E15B44F8A00A26A2F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		EC1FD48F15B44F8A00A26A2F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		EC1FD49115B44F8A00A26A2F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "src/FSNDemo-mac-Prefix.pch";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		EC1FD49215B44F8A00A26A2F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "src/FSNDemo-mac-Prefix.pch";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		EC1FD47B15B44F8A00A26A2F /* Build configuration list for PBXProject "FSNDemo-mac" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EC1FD48E15B44F8A00A26A2F /* Debug */,
+				EC1FD48F15B44F8A00A26A2F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EC1FD49015B44F8A00A26A2F /* Build configuration list for PBXNativeTarget "FSNDemo-mac" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EC1FD49115B44F8A00A26A2F /* Debug */,
+				EC1FD49215B44F8A00A26A2F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = EC1FD47815B44F8A00A26A2F /* Project object */;
+}

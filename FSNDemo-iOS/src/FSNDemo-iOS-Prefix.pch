@@ -1,0 +1,10 @@
+#import <Availability.h>
+
+// queued connections do not work on iOS 5
+#define FSN_QUEUED_CONNECTIONS 0
+
+
+#ifdef __OBJC__
+    #import <UIKit/UIKit.h>
+    #import <Foundation/Foundation.h>
+#endif

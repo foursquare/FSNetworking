@@ -1,0 +1,9 @@
+//
+// Prefix header for all source files of the 'FSNDemo-mac' target in the 'FSNDemo-mac' project
+//
+
+#define FSN_QUEUED_CONNECTIONS 1
+
+#ifdef __OBJC__
+    #import <Foundation/Foundation.h>
+#endif
