@@ -57,6 +57,98 @@ The most important aspects of this pattern are:
   - Send standard parameters such as OAuth token, client version, etc.
   - Combine standard and custom handling for parse and completion steps by calling small custom blocks inside of wrapper blocks that perform uniform error-checking, parsing, etc.
 
+For example, the foursquare app defines a category on FSNConnection that looks like this:
+
+``` objective-c
+
+@implementation FSNConnection (FS)
+
+
+// convenience accessor property that casts parseResult to our custom, API-specific type.
+- (ApiResult *)apiResult {
+    return self.parseResult;
+}
+
+
+- (ApiResult *)makeApiResultWithError:(NSError **)error {    
+    // parse the foursquare API result JSON.
+    // then check self.response.statusCode, as well as the foursquare API result 'meta' JSON dict for errors.
+    // if everything is OK, then return the an ApiResult instance, which contains api-specific properties.
+    // otherwise, set *error and return nil.
+    ...
+}
+
+
+// wrap an arbitrary completionBlock with standard handling behavior.
+- (void)finishWithBlock:(FSNCompletionBlock)completionBlock displayError:(BOOL)displayError {
+    ASSERT_MAIN_THREAD;
+    
+    if (self.error) {
+        // debug-build only error reporting.
+        FSLog(@"request error: %@ -- %@ -- %@ -- %@",
+              self.error, self.apiResult.errorDetail, self.apiResult.errorMessage, self.apiResult.errorType);
+    }
+    
+    // perform custom block
+    if (completionBlock) {
+        completionBlock(self);
+    }
+    
+    if (self.error && displayError) {
+        // display standard error UI.
+        ...
+    }
+    
+    // send standard notifications last.
+    ...
+}
+
+
+// most foursquare API requests are constructed with this method.
+// it standardizes some elements of request construction, and passes through custom parameters.
+// note how we wrap the custom completionBlock with standard behavior by virtue of an intermediate method;
+// this allows us to precisely control when the custom callback happens.
++ (id)withEndpoint:(NSString *)endpoint
+            method:(FSNRequestMethod)method
+        parameters:(NSDictionary *)parameters
+      displayError:(BOOL)displayError
+        parseBlock:(FSNParseBlock)parseBlock
+   completionBlock:(FSNCompletionBlock)completionBlock {
+    
+    // note: FSAPI is a singleton defining API-related properties, defined elsewhere.
+    return [self withUrl:[[FSAPI shared] urlForEndpoint:endpoint]
+                  method:method
+                 headers:[FSAPI shared].standardRequestHeaders // headers are the same for every request
+              parameters:[[FSAPI shared] completeParameters:parameters] // add standard parameters like OAuth token
+              parseBlock:parseBlock
+         completionBlock:^(FSNConnection *c) {
+             [c finishWithBlock:completionBlock displayError:displayError];
+         }
+           progressBlock:nil];
+}
+
+
+// a second wrapper constructor standardizes parseBlock implementa
+// most requests are constructed with this method.
++ (id)withEndpoint:(NSString*)endpoint
+            method:(FSNRequestMethod)method
+        parameters:(NSDictionary*)parameters
+      displayError:(BOOL)displayError
+   completionBlock:(FSNCompletionBlock)completionBlock {
+    
+    return [self withEndpoint:endpoint
+                       method:method
+                   parameters:parameters
+                 displayError:displayError
+                   parseBlock:^(FSNConnection *c, NSError **error) {
+                       return [c makeApiResultWithError:error];
+                   }
+              completionBlock:completionBlock];
+}
+
+@end
+```
+
 
 ### POST
 
