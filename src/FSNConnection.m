@@ -687,7 +687,7 @@ progressBlock:(FSNProgressBlock)progressBlock {
     
     [data appendData:[[NSString stringWithFormat:@"--%@--\r\n\r\n", boundary] UTF8Data]];
     
-#if 1 || FSN_LOG_POST_DATA
+#if FSN_LOG_POST_DATA
     FSNErr(@"  POST data:\n%@\n", [data debugString]);
 #endif
     
