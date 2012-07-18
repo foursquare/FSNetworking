@@ -43,10 +43,10 @@
 // quick assertions to make sure we are on the expected thread
 
 #define ASSERT_MAIN_THREAD \
-NSAssert1([NSThread isMainThread], @"%@: must be called from the main thread", __FUNCTION__)
+NSAssert1([NSThread isMainThread], @"%s: must be called from the main thread", __FUNCTION__)
 
 #define ASSERT_NOT_MAIN_THREAD \
-NSAssert1(![NSThread isMainThread], @"%@: must be called from a background thread", __FUNCTION__)
+NSAssert1(![NSThread isMainThread], @"%s: must be called from a background thread", __FUNCTION__)
 
 
 // HTTP 1.1 code classes; not currently used
