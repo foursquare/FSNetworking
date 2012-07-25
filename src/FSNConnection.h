@@ -63,24 +63,24 @@ NSString* stringForRequestMethod(FSNRequestMethod method);
 
 @interface FSNConnection : NSObject <NSURLConnectionDelegate>
 
-@property (nonatomic, retain)   NSURL *url;
+@property (nonatomic, strong)   NSURL *url;
 @property (nonatomic)           FSNRequestMethod method;
 
 #if TARGET_OS_IPHONE
 @property (nonatomic) BOOL shouldRunInBackground; // defaults to YES for POST method
 #endif
 
-@property (nonatomic, retain) NSDictionary *headers;    // optional custom http headers
-@property (nonatomic, retain) NSDictionary *parameters; // GET or POST parameters, including POST form data
+@property (nonatomic, strong) NSDictionary *headers;    // optional custom http headers
+@property (nonatomic, strong) NSDictionary *parameters; // GET or POST parameters, including POST form data
 
 @property (nonatomic, copy) FSNParseBlock parseBlock;           // executed in background thread
 @property (nonatomic, copy) FSNCompletionBlock completionBlock; // executed in main thread
 @property (nonatomic, copy) FSNProgressBlock progressBlock;     // executed in main thread
 
-@property (nonatomic, retain, readonly) NSURLResponse *response;        // response from NSURLConnection
-@property (nonatomic, retain, readonly) NSMutableData *responseData; 
-@property (nonatomic, retain, readonly) id<NSObject> parseResult;       // result of parseBlock; may be nil on success
-@property (nonatomic, retain, readonly) NSError *error;                 // if set then the request or parse failed
+@property (nonatomic, strong, readonly) NSURLResponse *response;        // response from NSURLConnection
+@property (nonatomic, strong, readonly) NSMutableData *responseData; 
+@property (nonatomic, strong, readonly) id<NSObject> parseResult;       // result of parseBlock; may be nil on success
+@property (nonatomic, strong, readonly) NSError *error;                 // if set then the request or parse failed
 
 @property (nonatomic, readonly) BOOL didStart;          // start was called
 @property (nonatomic, readonly) BOOL didFinishLoading;  // underlying connection finished loading

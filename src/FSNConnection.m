@@ -44,11 +44,11 @@ NSString* stringForRequestMethod(FSNRequestMethod method) {
 
 // public readonly
 
-@property (nonatomic, retain, readwrite) NSURLResponse *response;
-@property (nonatomic, retain, readwrite) NSMutableData *responseData;
+@property (nonatomic, strong, readwrite) NSURLResponse *response;
+@property (nonatomic, strong, readwrite) NSMutableData *responseData;
 
-@property (nonatomic, retain, readwrite) id<NSObject> parseResult;
-@property (nonatomic, retain, readwrite) NSError *error;
+@property (nonatomic, strong, readwrite) id<NSObject> parseResult;
+@property (nonatomic, strong, readwrite) NSError *error;
 
 @property (nonatomic, readwrite) BOOL didStart;
 @property (nonatomic, readwrite) BOOL didFinishLoading;
@@ -59,8 +59,8 @@ NSString* stringForRequestMethod(FSNRequestMethod method) {
 
 // private
 
-@property (nonatomic, retain) NSURLConnection *connection;
-@property (nonatomic, retain) NSRecursiveLock *blocksLock;
+@property (nonatomic, strong) NSURLConnection *connection;
+@property (nonatomic, strong) NSRecursiveLock *blocksLock;
 
 #if TARGET_OS_IPHONE
 @property (nonatomic) UIBackgroundTaskIdentifier taskIdentifier;
