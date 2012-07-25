@@ -115,23 +115,11 @@ blocksLock              = _blocksLock;
               @"deallocated request has background task identifier: %@", self);
 #endif
     
-    self.url            = nil;
-    self.headers        = nil;
-    self.parameters     = nil;
-    self.response       = nil;
-    self.responseData   = nil;
-    self.parseResult    = nil;
-    self.error          = nil;
     
     [self clearBlocks]; // not cleanup; assert no taskIdentifer above instead
     
     // just to be safe in production
     [self.connection cancel];
-    self.connection = nil;
-    
-    self.blocksLock = nil;
-    
-    [super dealloc];
 }
 
 
@@ -155,7 +143,7 @@ blocksLock              = _blocksLock;
     // protect executing blocks from being dealloced; lock is recursive because:
     // - calling clearBlocks may cause an object in the block closure to be released
     // - that may in turn 'own' the connection, and call clearBlocks to properly break retain cycles in all cases.
-    self.blocksLock = [[NSRecursiveLock new] autorelease];
+    self.blocksLock = [NSRecursiveLock new];
     
     return self;
 }
@@ -318,7 +306,7 @@ totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite {
 completionBlock:(FSNCompletionBlock)completionBlock
 progressBlock:(FSNProgressBlock)progressBlock {
     
-    FSNConnection *c = [[FSNConnection new] autorelease];
+    FSNConnection *c = [FSNConnection new];
     
     c.url           = url;
     c.method        = method;
@@ -503,9 +491,9 @@ progressBlock:(FSNProgressBlock)progressBlock {
     
     // initWithRequest semantics: url request is deep-copied; connection is started on current thread
     // TODO: determine if this deep-copy is problematic for large POST bodies
-    self.connection = [[[NSURLConnection alloc] initWithRequest:urlRequest
+    self.connection = [[NSURLConnection alloc] initWithRequest:urlRequest
                                                        delegate:self
-                                               startImmediately:NO] autorelease];
+                                               startImmediately:NO];
     
     if (!self.connection) {
         
@@ -557,7 +545,6 @@ progressBlock:(FSNProgressBlock)progressBlock {
 - (void)didExpireInBackground {
     ASSERT_MAIN_THREAD; // according to beginBackgroundTaskWithExpirationHandler
     
-    [self retain];
     [self cancelConnection]; // releases delegate (self)
     
     [self failWithError:
@@ -565,7 +552,6 @@ progressBlock:(FSNProgressBlock)progressBlock {
                          code:FSNConnectionErrorCodeExpiredInBackgroundTask
                      userInfo:[NSDictionary dictionaryWithObject:@"expired in background task" forKey:@"description"]]];
     
-    [self release];
 }
 
 #endif
@@ -713,7 +699,7 @@ void logParameter(FSNRequestMethod method, id key, id val) {
 - (NSURLRequest*)makeNSURLRequest {
     
     NSString *requestString = [self makeRequestString];
-    NSURL *url = [[[NSURL alloc] initWithString:requestString] autorelease];
+    NSURL *url = [[NSURL alloc] initWithString:requestString];
     NSMutableURLRequest* r = [NSMutableURLRequest requestWithURL:url];
     
     // always pipeline (could be changed to be an ifdef or instance property).

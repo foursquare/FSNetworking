@@ -57,7 +57,7 @@ fileName    =_fileName;
 
 
 + (id)withData:(NSData *)data mimeType:(MimeType)mimeType fileName:(NSString*)fileName {
-    return [[[self alloc] initWithData:data mimeType:mimeType fileName:fileName] autorelease];
+    return [[self alloc] initWithData:data mimeType:mimeType fileName:fileName];
 }
 
 

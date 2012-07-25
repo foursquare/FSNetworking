@@ -8,10 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		EC1FD48615B44F8A00A26A2F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC1FD48515B44F8A00A26A2F /* Foundation.framework */; };
-		ECF0922915B4D045001458C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = ECF0922815B4D045001458C7 /* main.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		ECF0923115B4D084001458C7 /* FSN_categories.m in Sources */ = {isa = PBXBuildFile; fileRef = ECF0922C15B4D04D001458C7 /* FSN_categories.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		ECF0923215B4D086001458C7 /* FSNConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = ECF0922E15B4D04D001458C7 /* FSNConnection.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		ECF0923315B4D089001458C7 /* FSNData.m in Sources */ = {isa = PBXBuildFile; fileRef = ECF0923015B4D04D001458C7 /* FSNData.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		ECF0922915B4D045001458C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = ECF0922815B4D045001458C7 /* main.m */; settings = {COMPILER_FLAGS = ""; }; };
+		ECF0923115B4D084001458C7 /* FSN_categories.m in Sources */ = {isa = PBXBuildFile; fileRef = ECF0922C15B4D04D001458C7 /* FSN_categories.m */; };
+		ECF0923215B4D086001458C7 /* FSNConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = ECF0922E15B4D04D001458C7 /* FSNConnection.m */; };
+		ECF0923315B4D089001458C7 /* FSNData.m in Sources */ = {isa = PBXBuildFile; fileRef = ECF0923015B4D04D001458C7 /* FSNData.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */

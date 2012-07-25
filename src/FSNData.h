@@ -28,7 +28,7 @@ NSString *stringForMimeType(MimeType type);
 @property (nonatomic) MimeType mimeType;
 @property (nonatomic, strong) NSString *fileName;
 
-@property (nonatomic, readonly) NSString *mimeTypeString;
+@property (weak, nonatomic, readonly) NSString *mimeTypeString;
 
 - (id)initWithData:(NSData *)data mimeType:(MimeType)mimeType fileName:(NSString*)fileName;
 

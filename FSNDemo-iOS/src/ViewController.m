@@ -14,9 +14,9 @@
 
 @interface ViewController ()
 
-@property (nonatomic, retain) IBOutlet UIButton *cancelButton;
-@property (nonatomic, retain) IBOutlet UITextView *textView;
-@property (nonatomic, retain) FSNConnection *connection;
+@property (nonatomic, strong) IBOutlet UIButton *cancelButton;
+@property (nonatomic, strong) IBOutlet UITextView *textView;
+@property (nonatomic, strong) FSNConnection *connection;
 
 @end
 

@@ -105,10 +105,10 @@ NSString * const FSNConnectionErrorDomain = @"FSNConnectionErrorDomain";
         debugBytes[i] = c;
     }
     
-    NSString *s = [[[NSString alloc] initWithBytesNoCopy:debugBytes
+    NSString *s = [[NSString alloc] initWithBytesNoCopy:debugBytes
                                                   length:length
                                                 encoding:NSISOLatin1StringEncoding
-                                            freeWhenDone:YES] autorelease];
+                                            freeWhenDone:YES];
     if (!s) {
         FSNLogError0(@"string encoding failed");
         free(debugBytes);
@@ -125,16 +125,16 @@ NSString * const FSNConnectionErrorDomain = @"FSNConnectionErrorDomain";
 
 
 + (NSString *)withUTF8Data:(NSData*)data {
-    return [[[self alloc] initWithBytes:data.bytes length:data.length encoding:NSUTF8StringEncoding] autorelease];
+    return [[self alloc] initWithBytes:data.bytes length:data.length encoding:NSUTF8StringEncoding];
 }
 
 
 - (NSString *)urlEncodedString {
-    return [(NSString *)CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault,
-                                                                (CFStringRef) self,
+    return (__bridge_transfer NSString *)CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault,
+                                                                (__bridge CFStringRef) self,
                                                                 NULL,
                                                                 (CFStringRef) @"!*'();:@&=+$,/?%#[]",
-                                                                kCFStringEncodingUTF8) autorelease];
+                                                                kCFStringEncodingUTF8);
 }
 
 
