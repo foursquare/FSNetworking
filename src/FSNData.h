@@ -24,11 +24,11 @@ NSString *stringForMimeType(MimeType type);
 
 @interface FSNData : NSObject
 
-@property (nonatomic, strong) NSData *data;
+@property (nonatomic) NSData *data;
 @property (nonatomic) MimeType mimeType;
-@property (nonatomic, strong) NSString *fileName;
+@property (nonatomic) NSString *fileName;
 
-@property (weak, nonatomic, readonly) NSString *mimeTypeString;
+@property (nonatomic, readonly) NSString *mimeTypeString;
 
 - (id)initWithData:(NSData *)data mimeType:(MimeType)mimeType fileName:(NSString*)fileName;
 
