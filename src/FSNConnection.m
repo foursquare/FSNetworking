@@ -56,6 +56,8 @@ NSString* stringForRequestMethod(FSNRequestMethod method) {
 @property (nonatomic, readwrite) int uploadProgressBytes;
 @property (nonatomic, readwrite) int uploadExpectedBytes;
 
+@property (nonatomic, readwrite) NSTimeInterval startTime;
+
 // private
 
 @property (nonatomic) NSURLConnection *connection;
@@ -91,6 +93,8 @@ didComplete             = _didComplete,
 
 uploadProgressBytes     = _uploadProgressBytes,
 uploadExpectedBytes     = _uploadExpectedBytes,
+
+startTime               = _startTime,
 
 #if TARGET_OS_IPHONE
 shouldRunInBackground   = _shouldRunInBackground,
@@ -458,6 +462,8 @@ progressBlock:(FSNProgressBlock)progressBlock {
     NSAssert(self.url, @"nil url");
     
     FSNVerbose(@"%p: enqueue (#%d)", self, [[self.class connections] count]);
+    
+    self.startTime = [[NSDate date] timeIntervalSinceReferenceDate];
     
     NSMutableSet *connections = [self.class mutableConnections];
     [connections addObject:self];

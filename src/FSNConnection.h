@@ -94,6 +94,8 @@ NSString* stringForRequestMethod(FSNRequestMethod method);
 @property (nonatomic, readonly) float uploadProgress;
 @property (nonatomic, readonly) float downloadProgress;
 
+@property (nonatomic, readonly) NSTimeInterval startTime;
+
 
 + (id)withUrl:(NSURL *)url
        method:(FSNRequestMethod)method
