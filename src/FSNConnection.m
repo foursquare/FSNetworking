@@ -432,10 +432,6 @@ progressBlock:(FSNProgressBlock)progressBlock {
 - (void)complete {
     ASSERT_MAIN_THREAD;
     
-#if FSN_LOG_VERBOSE
-    NSTimeInterval s = [NSDate timeIntervalSinceReferenceDate];
-#endif
-    
     self.didComplete = YES;
     
     [self reportProgress];
@@ -447,8 +443,6 @@ progressBlock:(FSNProgressBlock)progressBlock {
     [self.blocksLock unlock];
     
     [self cleanup];
-    
-    FSNVerbose(@"complete: %f", [NSDate timeIntervalSinceReferenceDate] - s);
 }
 
 
@@ -463,7 +457,7 @@ progressBlock:(FSNProgressBlock)progressBlock {
     
     FSNVerbose(@"%p: enqueue (#%d)", self, [[self.class connections] count]);
     
-    self.startTime = [[NSDate date] timeIntervalSinceReferenceDate];
+    self.startTime = [NSDate timeIntervalSinceReferenceDate];
     
     NSMutableSet *connections = [self.class mutableConnections];
     [connections addObject:self];
