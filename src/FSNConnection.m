@@ -380,8 +380,8 @@ progressBlock:(FSNProgressBlock)progressBlock {
 #else
     // dispatch to the medium priority global queue
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        [self parse]; 
-    });    
+        [self parse];
+    });
 #endif
 }
 
@@ -587,7 +587,7 @@ progressBlock:(FSNProgressBlock)progressBlock {
 
 
 - (void)performReportProgress {
-    [self performSelectorOnMainThread:@selector(reportProgress) withObject:nil waitUntilDone:NO];    
+    [self performSelectorOnMainThread:@selector(reportProgress) withObject:nil waitUntilDone:NO];
 }
 
 
@@ -661,7 +661,7 @@ progressBlock:(FSNProgressBlock)progressBlock {
           UTF8Data]];
         
         if (typeString) {
-            [data appendData:[[NSString stringWithFormat:@"Content-Type: %@\r\n", typeString] UTF8Data]]; 
+            [data appendData:[[NSString stringWithFormat:@"Content-Type: %@\r\n", typeString] UTF8Data]];
         }
         
         [data appendData:sep];
