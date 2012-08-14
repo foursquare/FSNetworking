@@ -14,6 +14,10 @@
 NSString * const FSNConnectionErrorDomain = @"FSNConnectionErrorDomain";
 
 
+BOOL httpCodeIsOfClass(int httpCode, FSNHTTPCodeClass httpClass) {
+    return (httpCode >> 2) == httpClass;
+}
+
 
 @implementation NSDictionary (FSN)
 

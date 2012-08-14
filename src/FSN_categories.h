@@ -49,7 +49,7 @@ NSAssert1([NSThread isMainThread], @"%s: must be called from the main thread", _
 NSAssert1(![NSThread isMainThread], @"%s: must be called from a background thread", __FUNCTION__)
 
 
-// HTTP 1.1 code classes; not currently used
+// HTTP 1.1 code classes
 typedef enum {
     FSNHTTPCodeClassUnknown     = 0,
     FSNHTTPCodeClassInfo        = 1, // 1xx: Informational
@@ -69,6 +69,9 @@ typedef enum {
 
 
 extern NSString * const FSNConnectionErrorDomain;
+
+
+BOOL httpCodeIsOfClass(int httpCode, FSNHTTPCodeClass httpClass);
 
 
 @interface NSDictionary (FSN)
