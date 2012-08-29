@@ -177,7 +177,10 @@ willSendRequestForAuthenticationChallenge:(NSURLAuthenticationChallenge *)challe
     // according to apple docs, this method may be called more than once in rare cases (similar to body stream case)
     // for this reason, responseData should be initialized/reset here
     self.response = response;
-    self.mutableResponseData = [NSMutableData data];
+    
+    if (!self.responseStream) {
+        self.mutableResponseData = [NSMutableData data];
+    }
 }
 
 
@@ -199,8 +202,14 @@ totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite {
     
     FSNVerbose(@"%p: didReceiveData", self);
     
-    [self.mutableResponseData appendData:data];
-    self.downloadProgressBytes = self.mutableResponseData.length;
+    if (self.responseStream) {
+        [self.responseStream write:data.bytes maxLength:data.length];
+        self.downloadProgressBytes += data.length;
+    }
+    else {
+        [self.mutableResponseData appendData:data];
+        self.downloadProgressBytes = self.mutableResponseData.length;
+    }
     
     [self performReportProgress];
 }
