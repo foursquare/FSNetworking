@@ -178,7 +178,10 @@ willSendRequestForAuthenticationChallenge:(NSURLAuthenticationChallenge *)challe
     // for this reason, responseData should be initialized/reset here
     self.response = response;
     
-    if (!self.responseStream) {
+    if (self.responseStream) {
+        [self.responseStream open];
+    }
+    else {
         self.mutableResponseData = [NSMutableData data];
     }
 }
@@ -227,6 +230,8 @@ totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite {
     
     FSNVerbose(@"%p: didFinishLoading", self);
     
+    [self.responseStream close];
+    
     self.didFinishLoading = YES;
     
     if (self.parseBlock) {
@@ -241,6 +246,7 @@ totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite {
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
     
     FSNVerbose(@"%p: didFail", self);
+    [self.responseStream close];
     [self failWithError:error];
 }
 
@@ -549,6 +555,7 @@ NSAssert(!self.didStart, @"method cannot be called after start: %s", __FUNCTION_
     
     FSNVerbose(@"%p: cancel", self);
     
+    [self.responseStream close];
     [self cancelConnection];
     [self cleanup]; // release blocks and background task identifier immediately
 }
