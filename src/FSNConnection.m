@@ -135,7 +135,7 @@ NSString* stringForRequestMethod(FSNRequestMethod method) {
              willSendRequest:(NSURLRequest *)request
             redirectResponse:(NSURLResponse *)response {
     
-    FSNVerbose(@"%p: willSendResponse", self);
+    FSNVerbose(@"%p: willSendRequest", self);
     return request;
 }
 
