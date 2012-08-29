@@ -53,8 +53,10 @@ NSString* stringForRequestMethod(FSNRequestMethod method) {
 @property (nonatomic, readwrite) BOOL didFinishLoading;
 @property (nonatomic, readwrite) BOOL didComplete;
 
-@property (nonatomic, readwrite) int uploadProgressBytes;
-@property (nonatomic, readwrite) int uploadExpectedBytes;
+@property (nonatomic, readwrite) long long uploadProgressBytes;
+@property (nonatomic, readwrite) long long uploadExpectedBytes;
+
+@property (nonatomic, readwrite) long long downloadProgressBytes;
 
 @property (nonatomic, readwrite) NSTimeInterval startTime;
 
@@ -198,6 +200,8 @@ totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite {
     FSNVerbose(@"%p: didReceiveData", self);
     
     [self.mutableResponseData appendData:data];
+    self.downloadProgressBytes = self.mutableResponseData.length;
+    
     [self performReportProgress];
 }
 
@@ -533,18 +537,8 @@ progressBlock:(FSNProgressBlock)progressBlock {
 // MARK: progress
 
 
-- (int)downloadProgressBytes {
-    return self.responseData.length;
-}
-
-
-- (int)downloadExpectedBytes {
-    long long length = self.response.expectedContentLength;
-    if (length > INT_MAX) {
-        FSNLog(@"downloadExpectedBytes: huge value: %lld", length);
-        return -1;
-    }
-    return length;
+- (long long)downloadExpectedBytes {
+    return self.response.expectedContentLength;
 }
 
 

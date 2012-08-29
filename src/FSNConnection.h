@@ -87,10 +87,10 @@ NSString* stringForRequestMethod(FSNRequestMethod method);
 @property (nonatomic, readonly) BOOL didComplete;       // underlying connection either finished or failed
 @property (nonatomic, readonly) BOOL didSucceed;        // finished with no error
 
-@property (nonatomic, readonly) int uploadProgressBytes;
-@property (nonatomic, readonly) int uploadExpectedBytes;
-@property (nonatomic, readonly) int downloadProgressBytes;
-@property (nonatomic, readonly) int downloadExpectedBytes;
+@property (nonatomic, readonly) long long uploadProgressBytes;
+@property (nonatomic, readonly) long long uploadExpectedBytes;
+@property (nonatomic, readonly) long long downloadProgressBytes;
+@property (nonatomic, readonly) long long downloadExpectedBytes;
 @property (nonatomic, readonly) float uploadProgress;
 @property (nonatomic, readonly) float downloadProgress;
 
