@@ -41,10 +41,10 @@ NSString* stringForRequestMethod(FSNRequestMethod method) {
 
 
 @interface FSNConnection ()
+
 // public readonly
 
 @property (nonatomic, readwrite) NSURLResponse *response;
-@property (nonatomic, readwrite) NSMutableData *responseData;
 
 @property (nonatomic, readwrite) id<NSObject> parseResult;
 @property (nonatomic, readwrite) NSError *error;
@@ -60,6 +60,7 @@ NSString* stringForRequestMethod(FSNRequestMethod method) {
 
 // private
 
+@property (nonatomic, readwrite) NSMutableData *mutableResponseData;
 @property (nonatomic) NSURLConnection *connection;
 @property (nonatomic) NSRecursiveLock *blocksLock;
 
@@ -84,6 +85,7 @@ progressBlock           = _progressBlock,
 
 response                = _response,
 responseData            = _responseData,
+mutableResponseData     = _mutableResponseData,
 parseResult             = _parseResult,
 error                   = _error,
 
@@ -206,7 +208,7 @@ willSendRequestForAuthenticationChallenge:(NSURLAuthenticationChallenge *)challe
     // according to apple docs, this method may be called more than once in rare cases (similar to body stream case)
     // for this reason, responseData should be initialized/reset here
     self.response = response;
-    self.responseData = [NSMutableData data];
+    self.mutableResponseData = [NSMutableData data];
 }
 
 
@@ -228,7 +230,7 @@ totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite {
  
     FSNVerbose(@"%p: didReceiveData", self);
     
-    [self.responseData appendData:data];
+    [self.mutableResponseData appendData:data];
     [self performReportProgress];
 }
 
@@ -333,6 +335,11 @@ progressBlock:(FSNProgressBlock)progressBlock {
 
 - (BOOL)didSucceed {
     return self.didComplete && !self.error;
+}
+
+
+- (NSData *)responseData {
+    return self.mutableResponseData;
 }
 
 

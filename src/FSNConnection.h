@@ -78,7 +78,7 @@ NSString* stringForRequestMethod(FSNRequestMethod method);
 @property (nonatomic, copy) FSNProgressBlock progressBlock;     // executed in main thread
 
 @property (nonatomic, readonly) NSURLResponse *response;        // response from NSURLConnection
-@property (nonatomic, readonly) NSMutableData *responseData;
+@property (nonatomic, readonly) NSData *responseData;
 @property (nonatomic, readonly) id<NSObject> parseResult;       // result of parseBlock; may be nil on success
 @property (nonatomic, readonly) NSError *error;                 // if set then the request or parse failed
 
