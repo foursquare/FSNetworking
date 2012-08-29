@@ -73,39 +73,6 @@ NSString* stringForRequestMethod(FSNRequestMethod method) {
 
 @implementation FSNConnection
 
-@synthesize
-url                     = _url,
-method                  = _method,
-headers                 = _headers,
-parameters              = _parameters,
-
-parseBlock              = _parseBlock,
-completionBlock         = _completionBlock,
-progressBlock           = _progressBlock,
-
-response                = _response,
-responseData            = _responseData,
-mutableResponseData     = _mutableResponseData,
-parseResult             = _parseResult,
-error                   = _error,
-
-didStart                = _didStart,
-didFinishLoading        = _didFinishLoading,
-didComplete             = _didComplete,
-
-uploadProgressBytes     = _uploadProgressBytes,
-uploadExpectedBytes     = _uploadExpectedBytes,
-
-startTime               = _startTime,
-
-#if TARGET_OS_IPHONE
-shouldRunInBackground   = _shouldRunInBackground,
-taskIdentifier          = _taskIdentifier,
-#endif
-
-connection              = _connection,
-blocksLock              = _blocksLock;
-
 
 #pragma mark - NSObject
 

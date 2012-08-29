@@ -30,11 +30,6 @@ NSString *stringForMimeType(MimeType type) {
 
 @implementation FSNData
 
-@synthesize
-data        =_data,
-mimeType    =_mimeType,
-fileName    =_fileName;
-
 
 - (id)description {
     NSString *fn = self.fileName ? [NSString stringWithFormat:@"; fileName=%@", self.fileName] : @"";
