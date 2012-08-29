@@ -150,7 +150,7 @@ NSString* stringForRequestMethod(FSNRequestMethod method) {
 
 // TODO: support authenticationBlock or delegate?
 - (BOOL)connectionShouldUseCredentialStorage:(NSURLConnection *)connection {
-
+    
     FSNVerbose(@"%p: connectionShouldUseCredentialStorage", self);
     return YES;
 }
@@ -168,7 +168,7 @@ willSendRequestForAuthenticationChallenge:(NSURLAuthenticationChallenge *)challe
 
 
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSHTTPURLResponse *)response {
-
+    
     FSNVerbose(@"%p: didReceiveResponse", self);
     FSNVerbose(@"Response Headers: %@", [response allHeaderFields]);
     
@@ -194,7 +194,7 @@ totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite {
 
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
- 
+    
     FSNVerbose(@"%p: didReceiveData", self);
     
     [self.mutableResponseData appendData:data];
@@ -211,7 +211,7 @@ totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite {
 
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
-
+    
     FSNVerbose(@"%p: didFinishLoading", self);
     
     self.didFinishLoading = YES;
@@ -372,7 +372,7 @@ progressBlock:(FSNProgressBlock)progressBlock {
     [self.blocksLock lock];
     
     if (self.parseBlock) {
-
+        
         self.parseResult = self.parseBlock(self, &error);
         
         if (error) {
@@ -465,8 +465,8 @@ progressBlock:(FSNProgressBlock)progressBlock {
     // initWithRequest semantics: url request is deep-copied; connection is started on current thread
     // TODO: determine if this deep-copy is problematic for large POST bodies
     self.connection = [[NSURLConnection alloc] initWithRequest:urlRequest
-                                                       delegate:self
-                                               startImmediately:NO];
+                                                      delegate:self
+                                              startImmediately:NO];
     
     if (!self.connection) {
         
