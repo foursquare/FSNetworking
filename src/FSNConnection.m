@@ -323,6 +323,48 @@ progressBlock:(FSNProgressBlock)progressBlock {
 }
 
 
+#define ASSERT_UNSTARTED \
+NSAssert(!self.didStart, @"method cannot be called after start: %s", __FUNCTION__)
+
+
+- (void)setUrl:(NSURL *)url {
+    ASSERT_UNSTARTED;
+    _url = url;
+}
+
+
+- (void)setMethod:(FSNRequestMethod)method {
+    ASSERT_UNSTARTED;
+    _method = method;
+}
+
+
+- (void)setShouldRunInBackground:(BOOL)shouldRunInBackground {
+    ASSERT_UNSTARTED;
+    _shouldRunInBackground = shouldRunInBackground;
+}
+
+
+- (void)setHeaders:(NSDictionary *)headers {
+    ASSERT_UNSTARTED;
+    _headers = headers;
+}
+
+
+- (void)setParameters:(NSDictionary *)parameters {
+    ASSERT_UNSTARTED;
+    _parameters = parameters;
+}
+
+
+- (void)setResponseStream:(NSOutputStream *)responseStream {
+    ASSERT_UNSTARTED;
+    _responseStream = responseStream;
+}
+
+
+
+
 // MARK: life cycle
 
 
