@@ -24,11 +24,13 @@ NSString *stringForMimeType(MimeType type);
 
 @interface FSNData : NSObject
 
-@property (nonatomic) NSData *data;
-@property (nonatomic) MimeType mimeType;
-@property (nonatomic) NSString *fileName;
+// NOTE: object property declarations in header are explicity 'strong' so that non-arc code may include the header.
 
-@property (nonatomic, readonly) NSString *mimeTypeString;
+@property (nonatomic, strong) NSData *data;
+@property (nonatomic) MimeType mimeType;
+@property (nonatomic, strong) NSString *fileName;
+
+@property (nonatomic, strong, readonly) NSString *mimeTypeString;
 
 - (id)initWithData:(NSData *)data mimeType:(MimeType)mimeType fileName:(NSString*)fileName;
 

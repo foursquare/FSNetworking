@@ -44,10 +44,10 @@ NSString* stringForRequestMethod(FSNRequestMethod method) {
 
 // public readonly
 
-@property (nonatomic, readwrite) NSURLResponse *response;
+@property (nonatomic, strong, readwrite) NSURLResponse *response;
 
-@property (nonatomic, readwrite) id<NSObject> parseResult;
-@property (nonatomic, readwrite) NSError *error;
+@property (nonatomic, strong, readwrite) id<NSObject> parseResult;
+@property (nonatomic, strong, readwrite) NSError *error;
 
 @property (nonatomic, readwrite) BOOL didStart;
 @property (nonatomic, readwrite) BOOL didFinishLoading;
