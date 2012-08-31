@@ -54,8 +54,8 @@ typedef enum {
 
 
 // NSNotification names
-NSString * const FSNConnectionActivityBegan;
-NSString * const FSNConnectionActivityEnded;
+extern NSString * const FSNConnectionActivityBegan;
+extern NSString * const FSNConnectionActivityEnded;
 
 // string function for request enum
 NSString* stringForRequestMethod(FSNRequestMethod method);
