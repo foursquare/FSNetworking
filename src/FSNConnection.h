@@ -99,6 +99,9 @@ NSString* stringForRequestMethod(FSNRequestMethod method);
 @property (nonatomic, readonly) float downloadProgress;
 
 @property (nonatomic, readonly) NSTimeInterval startTime;
+@property (nonatomic, readonly) NSTimeInterval responseInterval;
+@property (nonatomic, readonly) NSTimeInterval finishOrFailInterval;
+@property (nonatomic, readonly) NSTimeInterval parseInterval;
 
 
 + (id)withUrl:(NSURL *)url

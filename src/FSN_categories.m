@@ -125,6 +125,18 @@ BOOL httpCodeIsOfClass(int httpCode, FSNHTTPCodeClass httpClass) {
 
 
 
+@implementation NSDate (FSN)
+
+
++ (NSTimeInterval)posixTime {
+    return [[NSDate date] timeIntervalSince1970];
+}
+
+
+@end
+
+
+
 @implementation NSString (FSN)
 
 

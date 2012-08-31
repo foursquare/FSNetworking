@@ -59,6 +59,9 @@ NSString* stringForRequestMethod(FSNRequestMethod method) {
 @property (nonatomic, readwrite) long long downloadProgressBytes;
 
 @property (nonatomic, readwrite) NSTimeInterval startTime;
+@property (nonatomic, readwrite) NSTimeInterval responseInterval;
+@property (nonatomic, readwrite) NSTimeInterval finishOrFailInterval;
+@property (nonatomic, readwrite) NSTimeInterval parseInterval;
 
 // private
 
@@ -174,6 +177,8 @@ willSendRequestForAuthenticationChallenge:(NSURLAuthenticationChallenge *)challe
     FSNVerbose(@"%p: didReceiveResponse", self);
     FSNVerbose(@"Response Headers: %@", [response allHeaderFields]);
     
+    self.responseInterval = [NSDate posixTime] - self.startTime;
+    
     // according to apple docs, this method may be called more than once in rare cases (similar to body stream case)
     // for this reason, responseData should be initialized/reset here
     self.response = response;
@@ -230,6 +235,8 @@ totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite {
     
     FSNVerbose(@"%p: didFinishLoading", self);
     
+    self.finishOrFailInterval = [NSDate posixTime] - self.startTime;
+    
     [self.responseStream close];
     
     self.didFinishLoading = YES;
@@ -246,6 +253,7 @@ totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite {
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
     
     FSNVerbose(@"%p: didFail", self);
+    self.finishOrFailInterval = [NSDate posixTime] - self.startTime;
     [self.responseStream close];
     [self failWithError:error];
 }
@@ -435,6 +443,7 @@ NSAssert(!self.didStart, @"method cannot be called after start: %s", __FUNCTION_
     if (self.parseBlock) {
         
         self.parseResult = self.parseBlock(self, &error);
+        self.parseInterval = [NSDate posixTime] - self.startTime;
         
         if (error) {
             [self failWithError:error];
@@ -492,7 +501,7 @@ NSAssert(!self.didStart, @"method cannot be called after start: %s", __FUNCTION_
     
     FSNVerbose(@"%p: enqueue (#%d)", self, [[self.class connections] count]);
     
-    self.startTime = [NSDate timeIntervalSinceReferenceDate];
+    self.startTime = [NSDate posixTime];
     
     NSMutableSet *connections = [self.class mutableConnections];
     [connections addObject:self];

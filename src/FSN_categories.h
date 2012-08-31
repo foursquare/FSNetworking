@@ -96,6 +96,13 @@ BOOL httpCodeIsOfClass(int httpCode, FSNHTTPCodeClass httpClass);
 @end
 
 
+@interface NSDate (FSN)
+
++ (NSTimeInterval)posixTime;
+
+@end
+
+
 @interface NSString (FSN)
 
 // create a string from utf8 data
