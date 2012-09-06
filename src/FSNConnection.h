@@ -80,6 +80,7 @@ NSString* stringForRequestMethod(FSNRequestMethod method);
 @property (nonatomic, copy) FSNProgressBlock progressBlock;     // executed in main thread
 
 @property (nonatomic, strong, readonly) NSURLResponse *response;        // response from NSURLConnection
+@property (nonatomic, strong, readonly) NSHTTPURLResponse *httpResponse; // response or nil if not an http response
 @property (nonatomic, strong, readonly) NSData *responseData;           // populated with data unless responseStream is set.
 @property (nonatomic, strong) NSOutputStream *responseStream;           // if this is set then responseData will be nil
 

@@ -114,8 +114,7 @@ NSString* stringForRequestMethod(FSNRequestMethod method) {
 
 
 - (id)init {
-    self = [super init];
-    if (!self) return nil;
+    INIT([super init]);
     
     // protect executing blocks from being dealloced; lock is recursive because:
     // - calling clearBlocks may cause an object in the block closure to be released
@@ -329,6 +328,11 @@ progressBlock:(FSNProgressBlock)progressBlock {
 
 - (BOOL)didSucceed {
     return self.didComplete && !self.error;
+}
+
+
+- (NSHTTPURLResponse *)httpResponse {
+    return KIND_OR_NIL(self.response, NSHTTPURLResponse);
 }
 
 
