@@ -40,6 +40,107 @@
 #define FSNLogError(format, ...)    NSLog(@"ERROR: %s: " format, __FUNCTION__, __VA_ARGS__)
 
 
+// shorthand for the cocoa init idiom
+#define INIT(...) self = (__VA_ARGS__); if (!self) return nil;
+
+
+// shorthand for checking class membership
+#define IS_KIND(obj, class_name) ([(obj) isKindOfClass:[class_name class]])
+
+
+// return the object if it is of the specified class, or else nil
+#define KIND_OR_NIL(obj, class_name) \
+({ class_name *_obj = (id)(obj); (IS_KIND((_obj), class_name) ? (_obj) : nil); })
+
+
+// return the object if it is of the specified class, or else NSNull
+// this is useful for specifying values for dictionaryWithObjectsForKeys:
+#define KIND_OR_NULL(obj, class_name) \
+({ id _obj = (obj); (IS_KIND((_obj), class_name) ? (_obj) : [NSNull null]); })
+
+
+// return the string if it is not nil, otherwise return the blank string
+#define STRING_OR_BLANK(str) \
+({ NSString* _str = (str); _str ? _str : @""; })
+
+
+// return the string preceded by a space if not nil, otherwise the blank string
+#define SPACE_STRING_OR_BLANK(str) \
+({ NSString* _str = (str); _str ? [@" " stringByAppendingString:_str] : @""; })
+
+
+// check if an object is nil or NSNull
+#define IS_NIL_OR_NULL(obj) \
+({ id _obj = (obj); !_obj || IS_KIND(_obj, NSNull); })
+
+
+// check if an object is not nil and not NSNull
+#define NOT_NIL_NOR_NULL(obj) \
+({ id _obj = (obj); _obj && !IS_KIND(_obj, NSNull); })
+
+
+// return the object if it is non-nil, or else return NSNull
+#define LIVE_OR_NULL(obj) \
+({ id _obj = (obj); _obj ? _obj : [NSNull null]; })
+
+
+// return the object if it is non-nil, else return the alternate
+#define LIVE_ELSE(obj, alternate) \
+({ id _obj = (obj); _obj ? _obj : (alternate); })
+
+
+// type assertions, casting checks
+
+#define ASSERT_KIND(obj, class_name) \
+NSAssert2(IS_KIND((obj), class_name), \
+@"object is not of class: %@; actual: %@", [class_name class], [(obj) class])
+
+#define ASSERT_KIND_OR_NIL(obj, class_name) \
+NSAssert2(!obj || IS_KIND((obj), class_name), \
+@"non-nil object is not of class: %@; actual: %@", [class_name class], [(obj) class])
+
+
+// cast with a run-time type kind assertion
+#define CAST(class_name, ...) \
+({ id _obj = (__VA_ARGS__); ASSERT_KIND_OR_NIL(_obj, class_name); (class_name*)_obj; })
+
+
+// assertion for ENTERPRISE and DISTRIBUTION builds
+#define CHECK(condition) \
+if (!(condition)) [NSException raise:NSInternalInconsistencyException format:@"%s", #condition]
+
+#define CHECK_KIND(obj, kind) CHECK(IS_KIND((obj), kind))
+
+#define CHECK_KIND_OR_NIL(obj, kind) CHECK(IS_KIND_OR_NIL((obj), kind))
+
+#define CHECK_MAIN_THREAD CHECK([NSThread isMainThread])
+
+
+// shorthand to throw an exception in abstract base methods
+#define OVERRIDE \
+[NSException raise:NSInternalInconsistencyException format:@"%s: must override in subclass: %@", __FUNCTION__, [self class]]
+
+#define NON_DESIGNATED_INIT(designated_name) \
+[NSException raise:NSInternalInconsistencyException format:@"%s: non-designated initializer: instead use %@", __FUNCTION__, designated_name]; \
+return nil
+//[self release]; \
+
+
+// catch clause for non-critical try blocks, where we want to ignore failure
+#define CATCH_AND_LOG @catch (id exception) { FSLog(@"CAUGHT EXCEPTION: %s\n\%@", __FUNCTION__, exception); }
+
+// declare a temporary qualified version of a variable
+#define BLOCK_VAR(temp,     var) __block                __typeof__(var) temp = var
+#define WEAK_VAR(temp,      var) __weak                 __typeof__(var) temp = var
+#define UNSAFE_VAR(temp,    var) __unsafe_unretained    __typeof__(var) temp = var
+
+#define BLOCK(var)  BLOCK_VAR(block_ ## var,    var)
+#define WEAK(var)   WEAK_VAR(weak_ ## var,      var)
+#define UNSAFE(var) UNSAFE_VAR(unsafe_ ## var,  var)
+
+
+
+
 // quick assertions to make sure we are on the expected thread
 
 #define ASSERT_MAIN_THREAD \
