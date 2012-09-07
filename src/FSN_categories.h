@@ -47,6 +47,9 @@
 // shorthand for checking class membership
 #define IS_KIND(obj, class_name) ([(obj) isKindOfClass:[class_name class]])
 
+#define IS_KIND_OR_NIL(obj, class_name) \
+({ id _obj = (obj); (!_obj || IS_KIND(_obj, class_name))
+
 
 // return the object if it is of the specified class, or else nil
 #define KIND_OR_NIL(obj, class_name) \
@@ -65,18 +68,13 @@
 
 
 // return the string preceded by a space if not nil, otherwise the blank string
-#define SPACE_STRING_OR_BLANK(str) \
+#define STRING_WITH_SPACE_PREFIX_OR_BLANK(str) \
 ({ NSString* _str = (str); _str ? [@" " stringByAppendingString:_str] : @""; })
 
 
 // check if an object is nil or NSNull
 #define IS_NIL_OR_NULL(obj) \
 ({ id _obj = (obj); !_obj || IS_KIND(_obj, NSNull); })
-
-
-// check if an object is not nil and not NSNull
-#define NOT_NIL_NOR_NULL(obj) \
-({ id _obj = (obj); _obj && !IS_KIND(_obj, NSNull); })
 
 
 // return the object if it is non-nil, or else return NSNull
@@ -123,7 +121,6 @@ if (!(condition)) [NSException raise:NSInternalInconsistencyException format:@"%
 #define NON_DESIGNATED_INIT(designated_name) \
 [NSException raise:NSInternalInconsistencyException format:@"%s: non-designated initializer: instead use %@", __FUNCTION__, designated_name]; \
 return nil
-//[self release]; \
 
 
 // catch clause for non-critical try blocks, where we want to ignore failure
@@ -139,9 +136,7 @@ return nil
 #define UNSAFE(var) UNSAFE_VAR(unsafe_ ## var,  var)
 
 
-
-
-// quick assertions to make sure we are on the expected thread
+// assertions to make sure we are on the expected thread
 
 #define ASSERT_MAIN_THREAD \
 NSAssert1([NSThread isMainThread], @"%s: must be called from the main thread", __FUNCTION__)
