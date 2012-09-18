@@ -59,6 +59,7 @@ NSString* stringForRequestMethod(FSNRequestMethod method) {
 @property (nonatomic, readwrite) long long downloadProgressBytes;
 
 @property (nonatomic, readwrite) NSTimeInterval startTime;
+@property (nonatomic, readwrite) NSTimeInterval challengeInterval;
 @property (nonatomic, readwrite) NSTimeInterval responseInterval;
 @property (nonatomic, readwrite) NSTimeInterval finishOrFailInterval;
 @property (nonatomic, readwrite) NSTimeInterval parseInterval;
@@ -156,7 +157,7 @@ NSString* stringForRequestMethod(FSNRequestMethod method) {
 - (BOOL)connectionShouldUseCredentialStorage:(NSURLConnection *)connection {
     
     FSNVerbose(@"%p: connectionShouldUseCredentialStorage", self);
-    return YES;
+    return YES; // default (same as not implementing the delegate callback)
 }
 
 
@@ -164,6 +165,7 @@ NSString* stringForRequestMethod(FSNRequestMethod method) {
 willSendRequestForAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge {
     
     FSNVerbose(@"%p: willSendRequestForAuthenticationChallenge", self);
+    self.challengeInterval = [self intervalSinceStart];
     [challenge.sender performDefaultHandlingForAuthenticationChallenge:challenge];
 }
 
@@ -176,7 +178,7 @@ willSendRequestForAuthenticationChallenge:(NSURLAuthenticationChallenge *)challe
     FSNVerbose(@"%p: didReceiveResponse", self);
     FSNVerbose(@"Response Headers: %@", [response allHeaderFields]);
     
-    self.responseInterval = [NSDate posixTime] - self.startTime;
+    self.responseInterval = [self intervalSinceStart];
     
     // according to apple docs, this method may be called more than once in rare cases (similar to body stream case)
     // for this reason, responseData should be initialized/reset here
@@ -234,7 +236,7 @@ totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite {
     
     FSNVerbose(@"%p: didFinishLoading", self);
     
-    self.finishOrFailInterval = [NSDate posixTime] - self.startTime;
+    self.finishOrFailInterval = [self intervalSinceStart];
     
     [self.responseStream close];
     
@@ -252,7 +254,7 @@ totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite {
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
     
     FSNVerbose(@"%p: didFail", self);
-    self.finishOrFailInterval = [NSDate posixTime] - self.startTime;
+    self.finishOrFailInterval = [self intervalSinceStart];
     [self.responseStream close];
     [self failWithError:error];
 }
@@ -338,6 +340,11 @@ progressBlock:(FSNProgressBlock)progressBlock {
 
 - (NSData *)responseData {
     return self.mutableResponseData;
+}
+
+
+- (NSTimeInterval)intervalSinceStart {
+    return [NSDate posixTime] - self.startTime;
 }
 
 
@@ -447,7 +454,7 @@ NSAssert(!self.didStart, @"method cannot be called after start: %s", __FUNCTION_
     if (self.parseBlock) {
         
         self.parseResult = self.parseBlock(self, &error);
-        self.parseInterval = [NSDate posixTime] - self.startTime;
+        self.parseInterval = [self intervalSinceStart];
         
         if (error) {
             [self failWithError:error];
