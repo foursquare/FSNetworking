@@ -58,6 +58,7 @@ NSString* stringForRequestMethod(FSNRequestMethod method) {
 
 @property (nonatomic, readwrite) long long downloadProgressBytes;
 
+@property (nonatomic, readwrite) int concurrencyCountAtStart;
 @property (nonatomic, readwrite) NSTimeInterval startTime;
 @property (nonatomic, readwrite) NSTimeInterval challengeInterval;
 @property (nonatomic, readwrite) NSTimeInterval responseInterval;
@@ -516,6 +517,8 @@ NSAssert(!self.didStart, @"method cannot be called after start: %s", __FUNCTION_
     
     NSMutableSet *connections = [self.class mutableConnections];
     [connections addObject:self];
+    
+    self.concurrencyCountAtStart = [self.class mutableConnections].count;
     
     if (connections.count == 1) {
         [[NSNotificationCenter defaultCenter] postNotificationName:FSNConnectionActivityBegan object:nil];
