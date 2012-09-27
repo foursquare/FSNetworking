@@ -15,7 +15,6 @@ FSNConnection offers the following:
 - Response parsing in a background thread, followed by a completion block on the main thread.
 - Convenient, safe object retention sementics and life cycle management, enabling fire-and-forget requests.
 - Support for iOS background tasks.
-- Uses manual reference counting; ARC-compatible by compiling source with -fno-objc-arc.
 - Useful utilities for creating and debugging form data, parsing JSON, error checking, etc.
 - Clean, straightforward implementation; no class hierarchies to grok. Easily trace and understand the life cycle of your connection!
 
