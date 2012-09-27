@@ -242,7 +242,7 @@ FSNConnection was initially developed by Foursquare Labs as a replacement for AS
 
 The current maintainer is:
 
-- George King george@foursquare.com
+- Bryan Bonczek bryan@foursquare.com
 
 Feedback, bug reports, and code contributions are all welcome!
 
