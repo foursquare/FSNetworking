@@ -92,6 +92,34 @@ BOOL httpCodeIsOfClass(int httpCode, FSNHTTPCodeClass httpClass) {
 }
 
 
+- (id)arrayFromJSONWithError:(NSError **)error {
+  
+  NSAssert(error, @"nil error pointer");
+  
+  NSDictionary *array = [NSJSONSerialization JSONObjectWithData:self options:0 error:error];
+  
+  if (*error) {
+    return nil;
+  }
+  
+  if (![array isKindOfClass:[NSArray class]]) {
+    NSDictionary* userInfo =
+    [NSDictionary dictionaryWithObjectsAndKeys:
+     [NSString stringWithFormat:@"JSON result is not an array; type: %@", [array class]], @"description",
+     array, @"result",
+     nil];
+    
+    *error =
+    [NSError errorWithDomain:FSNConnectionErrorDomain code:FSNConnectionErrorCodeJSONResultType userInfo:userInfo];
+    
+    return nil;
+  }
+  
+  *error = nil;
+  return array;
+}
+
+
 - (NSString *)stringFromUTF8 {
     return [NSString withUTF8Data:self];
 }
