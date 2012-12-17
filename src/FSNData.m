@@ -34,8 +34,8 @@ NSString *stringForMimeType(MimeType type) {
 - (id)description {
     NSString *fn = self.fileName ? [NSString stringWithFormat:@"; fileName=%@", self.fileName] : @"";
     
-    return [NSString stringWithFormat:@"<FSNData: %p; data: %p; length: %u; mimeType: %@%@>",
-            self, _data, _data.length, self.mimeTypeString, fn];
+    return [NSString stringWithFormat:@"<FSNData: %p; data: %p; length: %lu; mimeType: %@%@>",
+            self, _data, (unsigned long)_data.length, self.mimeTypeString, fn];
 }
 
 
