@@ -716,7 +716,6 @@ NSAssert(!self.didStart, @"method cannot be called after start: %s", __FUNCTION_
         [data appendData:sep];
         [data appendData:valData];
         [data appendData:sep];
-        [data appendData:sep];
     }
     
     [data appendData:[[NSString stringWithFormat:@"--%@--\r\n\r\n", boundary] UTF8Data]];
