@@ -23,27 +23,36 @@ BOOL httpCodeIsOfClass(int httpCode, FSNHTTPCodeClass httpClass) {
 
 
 - (NSString *)urlQueryString {
-    
+
     NSMutableString *string = [NSMutableString string];
     BOOL first = YES;
-    
+    NSArray *acceptableValueClasses = @[[NSArray class],
+                                   [NSNumber class],
+                                   [NSString class]];
+
+    BOOL (^isValueAcceptable)(id) = ^(id val) {
+        for (Class klass in acceptableValueClasses) {
+            if ([val isKindOfClass:klass])
+                return YES;
+        }
+        return NO;
+    };
+
     for (id key in self) {
         id val = [self objectForKey:key];
-        
-        if (![key isKindOfClass:[NSString class]] ||
-            !([val isKindOfClass:[NSString class]] || [val isKindOfClass:[NSNumber class]])) {
-            
+
+        if (![key isKindOfClass:[NSString class]] || !isValueAcceptable(val)) {
             FSNLogError(@"skipping bad parameter: key class: %@ key: %@; value class: %@; value: %@",
                         [key class], key, [val class], val);
             NSAssert(0, @"bad parameter type");
             continue;
         }
-        
+
         [string appendFormat:@"%@%@=%@",
          (first ? @"" : @"&"),
          [key urlEncodedString],
          [([val isKindOfClass:[NSNumber class]] ? [val stringValue] : val) urlEncodedString]];
-        
+
         first = NO;
     }
     return string;
@@ -160,8 +169,6 @@ BOOL httpCodeIsOfClass(int httpCode, FSNHTTPCodeClass httpClass) {
 
 
 @end
-
-
 
 @implementation NSURLResponse (FSN)
 
