@@ -48,10 +48,7 @@ BOOL httpCodeIsOfClass(int httpCode, FSNHTTPCodeClass httpClass) {
             continue;
         }
 
-        [string appendFormat:@"%@%@=%@",
-         (first ? @"" : @"&"),
-         [key urlEncodedString],
-         [([val isKindOfClass:[NSNumber class]] ? [val stringValue] : val) urlEncodedString]];
+        [string appendFormat:@"%@%@=%@", (first ? @"" : @"&"), [key urlEncodedString], [val urlEncodedString]];
 
         first = NO;
     }
@@ -197,6 +194,20 @@ BOOL httpCodeIsOfClass(int httpCode, FSNHTTPCodeClass httpClass) {
 
 
 @end
+
+
+
+@implementation NSNumber (FSN)
+
+
+- (NSString *)urlEncodedString {
+  return self.stringValue;
+}
+
+
+@end
+
+
 
 @implementation NSURLResponse (FSN)
 

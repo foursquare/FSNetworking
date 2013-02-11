@@ -213,6 +213,12 @@ BOOL httpCodeIsOfClass(int httpCode, FSNHTTPCodeClass httpClass);
 @end
 
 
+@interface NSNumber (FSN)
+
+- (NSString*)urlEncodedString; // just returns stringValue
+
+@end
+
 
 @interface NSURLResponse (FSN)
 
