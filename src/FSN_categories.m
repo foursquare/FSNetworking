@@ -22,34 +22,32 @@ BOOL httpCodeIsOfClass(int httpCode, FSNHTTPCodeClass httpClass) {
 @implementation NSDictionary (FSN)
 
 
-- (NSString *)urlQueryString {
+BOOL isValueAcceptable(id val) {
+    static NSArray* acceptableValueClasses = nil;
+    if (!acceptableValueClasses) {
+        acceptableValueClasses = @[[NSArray class], [NSNumber class], [NSString class]];
+    }
+    for (Class klass in acceptableValueClasses) {
+        if ([val isKindOfClass:klass])
+            return YES;
+    }
+    return NO;
+};
 
+
+- (NSString *)urlQueryString {
     NSMutableString *string = [NSMutableString string];
     BOOL first = YES;
-    NSArray *acceptableValueClasses = @[[NSArray class],
-                                   [NSNumber class],
-                                   [NSString class]];
-
-    BOOL (^isValueAcceptable)(id) = ^(id val) {
-        for (Class klass in acceptableValueClasses) {
-            if ([val isKindOfClass:klass])
-                return YES;
-        }
-        return NO;
-    };
 
     for (id key in self) {
         id val = [self objectForKey:key];
-
         if (![key isKindOfClass:[NSString class]] || !isValueAcceptable(val)) {
             FSNLogError(@"skipping bad parameter: key class: %@ key: %@; value class: %@; value: %@",
                         [key class], key, [val class], val);
             NSAssert(0, @"bad parameter type");
             continue;
         }
-
         [string appendFormat:@"%@%@=%@", (first ? @"" : @"&"), [key urlEncodedString], [val urlEncodedString]];
-
         first = NO;
     }
     return string;
