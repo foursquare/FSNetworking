@@ -365,10 +365,12 @@ NSAssert(!self.didStart, @"method cannot be called after start: %s", __FUNCTION_
 }
 
 
+#if TARGET_OS_IPHONE
 - (void)setShouldRunInBackground:(BOOL)shouldRunInBackground {
     ASSERT_UNSTARTED;
     _shouldRunInBackground = shouldRunInBackground;
 }
+#endif
 
 
 - (void)setHeaders:(NSDictionary *)headers {
@@ -801,7 +803,7 @@ FSNErr(@"- header: %-16s : %@", [k UTF8String], v); [r setValue:v forHTTPHeaderF
                 contentType = @"application/x-www-form-urlencoded";
             }
             
-            NSString *contentLength = [NSString stringWithFormat:@"%u", body.length];
+            NSString *contentLength = [NSString stringWithFormat:@"%lu", (unsigned long)body.length];
             
             SET_HEADER(@"Content-Type", contentType);
             SET_HEADER(@"Content-Length", contentLength);

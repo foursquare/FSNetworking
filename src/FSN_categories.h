@@ -181,8 +181,9 @@ BOOL httpCodeIsOfClass(int httpCode, FSNHTTPCodeClass httpClass);
 
 @interface NSData (FSN)
 
-// convenience method to ensure that top-level json object is a dictionary
+// convenience methods to ensure that top-level json objects are of the expected container type
 - (id)dictionaryFromJSONWithError:(NSError **)error; // error pointer must not be nil
+- (id)arrayFromJSONWithError:(NSError **)error; // error pointer must not be nil
 
 - (NSString *)stringFromUTF8;
 
@@ -211,6 +212,12 @@ BOOL httpCodeIsOfClass(int httpCode, FSNHTTPCodeClass httpClass);
 
 @end
 
+
+@interface NSNumber (FSN)
+
+- (NSString*)urlEncodedString; // just returns stringValue
+
+@end
 
 
 @interface NSURLResponse (FSN)

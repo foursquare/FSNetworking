@@ -22,37 +22,32 @@ BOOL httpCodeIsOfClass(int httpCode, FSNHTTPCodeClass httpClass) {
 @implementation NSDictionary (FSN)
 
 
-- (NSString *)urlQueryString {
+BOOL isValueAcceptable(id val) {
+    static NSArray* acceptableValueClasses = nil;
+    if (!acceptableValueClasses) {
+        acceptableValueClasses = @[[NSArray class], [NSNumber class], [NSString class]];
+    }
+    for (Class klass in acceptableValueClasses) {
+        if ([val isKindOfClass:klass])
+            return YES;
+    }
+    return NO;
+};
 
+
+- (NSString *)urlQueryString {
     NSMutableString *string = [NSMutableString string];
     BOOL first = YES;
-    NSArray *acceptableValueClasses = @[[NSArray class],
-                                   [NSNumber class],
-                                   [NSString class]];
-
-    BOOL (^isValueAcceptable)(id) = ^(id val) {
-        for (Class klass in acceptableValueClasses) {
-            if ([val isKindOfClass:klass])
-                return YES;
-        }
-        return NO;
-    };
 
     for (id key in self) {
         id val = [self objectForKey:key];
-
         if (![key isKindOfClass:[NSString class]] || !isValueAcceptable(val)) {
             FSNLogError(@"skipping bad parameter: key class: %@ key: %@; value class: %@; value: %@",
                         [key class], key, [val class], val);
             NSAssert(0, @"bad parameter type");
             continue;
         }
-
-        [string appendFormat:@"%@%@=%@",
-         (first ? @"" : @"&"),
-         [key urlEncodedString],
-         [([val isKindOfClass:[NSNumber class]] ? [val stringValue] : val) urlEncodedString]];
-
+        [string appendFormat:@"%@%@=%@", (first ? @"" : @"&"), [key urlEncodedString], [val urlEncodedString]];
         first = NO;
     }
     return string;
@@ -89,6 +84,34 @@ BOOL httpCodeIsOfClass(int httpCode, FSNHTTPCodeClass httpClass) {
     
     *error = nil;
     return dict;
+}
+
+
+- (id)arrayFromJSONWithError:(NSError **)error {
+  
+  NSAssert(error, @"nil error pointer");
+  
+  NSDictionary *array = [NSJSONSerialization JSONObjectWithData:self options:0 error:error];
+  
+  if (*error) {
+    return nil;
+  }
+  
+  if (![array isKindOfClass:[NSArray class]]) {
+    NSDictionary* userInfo =
+    [NSDictionary dictionaryWithObjectsAndKeys:
+     [NSString stringWithFormat:@"JSON result is not an array; type: %@", [array class]], @"description",
+     array, @"result",
+     nil];
+    
+    *error =
+    [NSError errorWithDomain:FSNConnectionErrorDomain code:FSNConnectionErrorCodeJSONResultType userInfo:userInfo];
+    
+    return nil;
+  }
+  
+  *error = nil;
+  return array;
 }
 
 
@@ -169,6 +192,20 @@ BOOL httpCodeIsOfClass(int httpCode, FSNHTTPCodeClass httpClass) {
 
 
 @end
+
+
+
+@implementation NSNumber (FSN)
+
+
+- (NSString *)urlEncodedString {
+  return self.stringValue;
+}
+
+
+@end
+
+
 
 @implementation NSURLResponse (FSN)
 
