@@ -193,7 +193,21 @@ BOOL isValueAcceptable(id val) {
 
 @end
 
+@implementation NSArray (FSN)
 
+- (NSString *)urlEncodedString {
+    BOOL firstPass = YES;
+    NSMutableString *base = [NSMutableString new];
+    for (id obj in self) {
+        if (!firstPass)
+            [base appendString:@","];
+        [base appendString:[obj urlEncodedString]];
+        firstPass = NO;
+    }
+    return base;
+}
+
+@end
 
 @implementation NSNumber (FSN)
 

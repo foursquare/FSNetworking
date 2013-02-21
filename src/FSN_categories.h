@@ -199,6 +199,11 @@ BOOL httpCodeIsOfClass(int httpCode, FSNHTTPCodeClass httpClass);
 
 @end
 
+@interface NSArray (FSN)
+
+- (NSString *)urlEncodedString;
+
+@end
 
 @interface NSString (FSN)
 
